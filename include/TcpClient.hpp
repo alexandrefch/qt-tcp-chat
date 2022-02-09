@@ -6,15 +6,12 @@
 #include <QHostAddress>
 #include <QByteArray>
 
-#include <iostream>
-
 #include <include/TcpSocket.hpp>
 
 class TcpClient : public TcpSocket
 {
 Q_OBJECT
-private
-:
+private:
     QTcpSocket *client;
 
 public:

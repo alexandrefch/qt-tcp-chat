@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <iostream>
+#include <fstream>
+#include <string>
 
 #include "include/InputWidget.hpp"
 #include "include/ConversationWidget.hpp"
@@ -20,12 +22,14 @@ private:
     ConversationWidget *convWidget;
     InputWidget        *inputWidget;
     TcpSocket          *tcpSocket;
+    std::string              word;
 
 public:
     ChatWindow(bool isServer);
     ~ChatWindow();
 
 private:
+    void generateWord();
     void closeEvent(QCloseEvent *event);
 
 private slots:

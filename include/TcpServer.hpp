@@ -7,8 +7,6 @@
 #include <QList>
 #include <QAbstractSocket>
 
-#include <iostream>
-
 #include <include/TcpSocket.hpp>
 
 class TcpServer : public TcpSocket

@@ -30,5 +30,5 @@ void TcpClient::onReadyRead()
 
 void TcpClient::onDisconnection()
 {
-    emit onReceiveMessage("Déconnexion du serveur distant !\n");
+    emit onReceiveMessage("Déconnexion du serveur distant !");
 }

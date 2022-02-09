@@ -29,12 +29,38 @@ ChatWindow::ChatWindow(bool isServer)
         this,SLOT(receiveMessage(QString))
         );
 
+    generateWord();
     show();
 }
 
 ChatWindow::~ChatWindow()
 {
     
+}
+
+void ChatWindow::generateWord()
+{
+    std::ifstream wordsFile("ressource/words.txt");
+    std::string   line;
+    int      count;
+    int      random;
+    int      i = 0;
+
+    getline (wordsFile, line);
+    count = atoi(line.c_str());
+    random = std::rand()%count;
+
+    while (getline (wordsFile, line)) {
+        if(i++==random)
+        {
+            word = line;
+            break;
+        }
+    }
+
+    QString message = QString::fromUtf8(("Votre mot secret est : \'"+word+"\'").c_str());
+    convWidget->displayMessage(new Message(message, MessageType::SEND));
+    wordsFile.close();
 }
 
 void ChatWindow::closeEvent(QCloseEvent *event)

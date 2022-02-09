@@ -4,7 +4,7 @@ InputWidget::InputWidget(unsigned int size)
 {
     this->size = size;
     this->inputField = new QTextEdit();
-    this->sendButton = new QPushButton("Send");
+    this->sendButton = new QPushButton("Envoyer");
 
     this->inputField->setFixedHeight(size);
     this->sendButton->setFixedHeight(size);

@@ -28,5 +28,5 @@ void InputWidget::onSendMessage()
     this->inputField->setPlainText("");
     
     if(text.length()>0)
-        emit sendMessage(text);
+        emit sendMessage(Message(text,true,MessageType::USER));
 }

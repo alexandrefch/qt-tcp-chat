@@ -12,8 +12,7 @@
 class TcpServer : public TcpSocket
 {
 Q_OBJECT
-private
-:
+private:
     QTcpServer         *server;
     QList<QTcpSocket*>  clients;
 
@@ -22,7 +21,7 @@ public:
     ~TcpServer();
 
     void close();
-    void sendMessage(QString text);
+    void sendMessage(Message msg);
 
 private slots:
     void onNewConnection();

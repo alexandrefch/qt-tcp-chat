@@ -6,14 +6,24 @@
 #include <QString>
 #include <QHBoxLayout>
 
-enum MessageType { SEND, RECEIVE };
+enum MessageType { USER, PROGRAM };
 
-class Message : public QWidget
+class Message
 {
-Q_OBJECT
+private:
+    QString     content;
+    MessageType type;
+    bool        isSend;
+
 public:
-    Message(QString content, MessageType type);
+    Message(QString content, bool isSend, MessageType type);
+    Message(QByteArray datas);
     ~Message();
+
+    QString getContent();
+    MessageType getType();
+    QByteArray toQByteArray();
+    QWidget *toQLabel();
 };
 
 #endif

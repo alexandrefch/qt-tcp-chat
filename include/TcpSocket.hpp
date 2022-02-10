@@ -2,6 +2,7 @@
 #define TCP_SOCKET_HPP
 
 #include <QObject>
+#include "include/Message.hpp"
 
 class TcpSocket : public QObject
 {
@@ -12,11 +13,11 @@ public:
     TcpSocket();
     ~TcpSocket();
 
-    virtual void sendMessage(QString text) = 0;
+    virtual void sendMessage(Message msg) = 0;
     virtual void close() = 0;
 
 signals:
-    void onReceiveMessage(QString text);
+    void onReceiveMessage(Message msg);
 };
 
 #endif

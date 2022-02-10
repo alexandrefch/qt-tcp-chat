@@ -18,10 +18,10 @@ void TcpServer::close()
     server->close();
 }
 
-void TcpServer::sendMessage(QString text)
+void TcpServer::sendMessage(Message msg)
 {
     for (QTcpSocket* socket : clients)
-        socket->write(QByteArray(text.toUtf8()));
+        socket->write(msg.toQByteArray());
 }
 
 void TcpServer::onNewConnection()

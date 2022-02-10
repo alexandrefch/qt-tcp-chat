@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QTextEdit>
+#include "include/Message.hpp"
 
 class InputWidget : public QWidget
 {
@@ -19,7 +20,7 @@ public:
     ~InputWidget();
 
 signals:
-    void sendMessage(QString text);
+    void sendMessage(Message msg);
 
 private slots:
     void onSendMessage();

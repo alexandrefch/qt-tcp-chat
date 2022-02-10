@@ -19,7 +19,7 @@ ConversationWidget::~ConversationWidget()
 }
 
 
-void ConversationWidget::displayMessage(Message *message)
+void ConversationWidget::displayMessage(Message msg)
 {
-    this->messageLayout->addWidget(message);
+    this->messageLayout->addWidget(msg.toQLabel());
 }

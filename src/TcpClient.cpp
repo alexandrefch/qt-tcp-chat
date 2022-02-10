@@ -17,18 +17,23 @@ void TcpClient::close()
     client->close();
 }
 
-void TcpClient::sendMessage(QString text)
+void TcpClient::sendMessage(Message msg)
 {
-    client->write(QByteArray(text.toUtf8()));
+    client->write(msg.toQByteArray());
 }
 
 void TcpClient::onReadyRead()
 {
-    QByteArray datas = client->readAll();
-    emit onReceiveMessage(datas);
+    emit onReceiveMessage(Message(client->readAll()));
 }
 
 void TcpClient::onDisconnection()
 {
-    emit onReceiveMessage("Déconnexion du serveur distant !");
+    emit onReceiveMessage(
+        Message(
+            "Déconnexion du serveur distant !",
+            false,
+            MessageType::PROGRAM
+            )
+        );
 }

@@ -17,7 +17,7 @@ public:
     ConversationWidget();
     ~ConversationWidget();
 
-    void displayMessage(Message *message);
+    void displayMessage(Message msg);
 };
 
 #endif

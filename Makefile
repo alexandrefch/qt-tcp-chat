@@ -62,7 +62,6 @@ SOURCES       = src/ChatWindow.cpp \
 		src/TcpSocket.cpp moc/moc_ChatWindow.cpp \
 		moc/moc_ConversationWidget.cpp \
 		moc/moc_InputWidget.cpp \
-		moc/moc_Message.cpp \
 		moc/moc_TcpClient.cpp \
 		moc/moc_TcpServer.cpp \
 		moc/moc_TcpSocket.cpp
@@ -77,7 +76,6 @@ OBJECTS       = obj/ChatWindow.o \
 		obj/moc_ChatWindow.o \
 		obj/moc_ConversationWidget.o \
 		obj/moc_InputWidget.o \
-		obj/moc_Message.o \
 		obj/moc_TcpClient.o \
 		obj/moc_TcpServer.o \
 		obj/moc_TcpSocket.o
@@ -382,15 +380,16 @@ compiler_moc_predefs_clean:
 moc/moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc/moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc/moc_ChatWindow.cpp moc/moc_ConversationWidget.cpp moc/moc_InputWidget.cpp moc/moc_Message.cpp moc/moc_TcpClient.cpp moc/moc_TcpServer.cpp moc/moc_TcpSocket.cpp
+compiler_moc_header_make_all: moc/moc_ChatWindow.cpp moc/moc_ConversationWidget.cpp moc/moc_InputWidget.cpp moc/moc_TcpClient.cpp moc/moc_TcpServer.cpp moc/moc_TcpSocket.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc/moc_ChatWindow.cpp moc/moc_ConversationWidget.cpp moc/moc_InputWidget.cpp moc/moc_Message.cpp moc/moc_TcpClient.cpp moc/moc_TcpServer.cpp moc/moc_TcpSocket.cpp
+	-$(DEL_FILE) moc/moc_ChatWindow.cpp moc/moc_ConversationWidget.cpp moc/moc_InputWidget.cpp moc/moc_TcpClient.cpp moc/moc_TcpServer.cpp moc/moc_TcpSocket.cpp
 moc/moc_ChatWindow.cpp: include/ChatWindow.hpp \
 		include/InputWidget.hpp \
 		include/ConversationWidget.hpp \
 		include/Message.hpp \
 		include/TcpServer.hpp \
 		include/TcpSocket.hpp \
+		include/TcpClient.hpp \
 		moc/moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alex/Documents/QTproject/moc/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alex/Documents/QTproject -I/home/alex/Documents/QTproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/ChatWindow.hpp -o moc/moc_ChatWindow.cpp
@@ -406,24 +405,22 @@ moc/moc_InputWidget.cpp: include/InputWidget.hpp \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alex/Documents/QTproject/moc/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alex/Documents/QTproject -I/home/alex/Documents/QTproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/InputWidget.hpp -o moc/moc_InputWidget.cpp
 
-moc/moc_Message.cpp: include/Message.hpp \
-		moc/moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alex/Documents/QTproject/moc/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alex/Documents/QTproject -I/home/alex/Documents/QTproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/Message.hpp -o moc/moc_Message.cpp
-
 moc/moc_TcpClient.cpp: include/TcpClient.hpp \
 		include/TcpSocket.hpp \
+		include/Message.hpp \
 		moc/moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alex/Documents/QTproject/moc/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alex/Documents/QTproject -I/home/alex/Documents/QTproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/TcpClient.hpp -o moc/moc_TcpClient.cpp
 
 moc/moc_TcpServer.cpp: include/TcpServer.hpp \
 		include/TcpSocket.hpp \
+		include/Message.hpp \
 		moc/moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alex/Documents/QTproject/moc/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alex/Documents/QTproject -I/home/alex/Documents/QTproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/TcpServer.hpp -o moc/moc_TcpServer.cpp
 
 moc/moc_TcpSocket.cpp: include/TcpSocket.hpp \
+		include/Message.hpp \
 		moc/moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alex/Documents/QTproject/moc/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alex/Documents/QTproject -I/home/alex/Documents/QTproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/TcpSocket.hpp -o moc/moc_TcpSocket.cpp
@@ -449,7 +446,8 @@ obj/ChatWindow.o: src/ChatWindow.cpp include/ChatWindow.hpp \
 		include/ConversationWidget.hpp \
 		include/Message.hpp \
 		include/TcpServer.hpp \
-		include/TcpSocket.hpp
+		include/TcpSocket.hpp \
+		include/TcpClient.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/ChatWindow.o src/ChatWindow.cpp
 
 obj/ConversationWidget.o: src/ConversationWidget.cpp include/ConversationWidget.hpp \
@@ -464,21 +462,25 @@ obj/main.o: src/main.cpp include/ChatWindow.hpp \
 		include/ConversationWidget.hpp \
 		include/Message.hpp \
 		include/TcpServer.hpp \
-		include/TcpSocket.hpp
+		include/TcpSocket.hpp \
+		include/TcpClient.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/Message.o: src/Message.cpp include/Message.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Message.o src/Message.cpp
 
 obj/TcpClient.o: src/TcpClient.cpp include/TcpClient.hpp \
-		include/TcpSocket.hpp
+		include/TcpSocket.hpp \
+		include/Message.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/TcpClient.o src/TcpClient.cpp
 
 obj/TcpServer.o: src/TcpServer.cpp include/TcpServer.hpp \
-		include/TcpSocket.hpp
+		include/TcpSocket.hpp \
+		include/Message.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/TcpServer.o src/TcpServer.cpp
 
-obj/TcpSocket.o: src/TcpSocket.cpp include/TcpSocket.hpp
+obj/TcpSocket.o: src/TcpSocket.cpp include/TcpSocket.hpp \
+		include/Message.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/TcpSocket.o src/TcpSocket.cpp
 
 obj/moc_ChatWindow.o: moc/moc_ChatWindow.cpp 
@@ -489,9 +491,6 @@ obj/moc_ConversationWidget.o: moc/moc_ConversationWidget.cpp
 
 obj/moc_InputWidget.o: moc/moc_InputWidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_InputWidget.o moc/moc_InputWidget.cpp
-
-obj/moc_Message.o: moc/moc_Message.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_Message.o moc/moc_Message.cpp
 
 obj/moc_TcpClient.o: moc/moc_TcpClient.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_TcpClient.o moc/moc_TcpClient.cpp

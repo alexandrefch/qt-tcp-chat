@@ -20,13 +20,13 @@ ChatWindow::ChatWindow(bool isServer)
     verticalLayout->addWidget(inputWidget,1);
 
     connect(
-        inputWidget,SIGNAL(sendMessage(QString)),
-        this,SLOT(sendMessage(QString))
+        inputWidget,SIGNAL(sendMessage(Message)),
+        this,SLOT(sendMessage(Message))
         );
 
     connect(
-        tcpSocket,SIGNAL(onReceiveMessage(QString)),
-        this,SLOT(receiveMessage(QString))
+        tcpSocket,SIGNAL(onReceiveMessage(Message)),
+        this,SLOT(receiveMessage(Message))
         );
 
     generateWord();
@@ -59,8 +59,39 @@ void ChatWindow::generateWord()
     }
 
     QString message = QString::fromUtf8(("Votre mot secret est : \'"+word+"\'").c_str());
-    convWidget->displayMessage(new Message(message, MessageType::SEND));
+    convWidget->displayMessage(Message(message, true, MessageType::PROGRAM));
     wordsFile.close();
+}
+
+void ChatWindow::checkWord(QString text)
+{
+    const unsigned short  word_len = word.length();
+    const unsigned short  text_len = text.length();
+    const char           *word_c   = word.c_str();
+    const char           *text_c   = text.toStdString().c_str();
+    char                 *mask_c   = new char[word_len];
+
+    // Init mask to "____" of word length
+    for(int i=0;i<word_len;i++)
+        mask_c[i] = '_';
+
+    // 
+    for(int i=0;i<text_len;i++)
+    {
+        for(int j=0;j<word_len;j++)
+        {
+            if(mask_c[j] == '_' && text_c[i]==word_c[j])
+                mask_c[j] = word_c[j];
+        }
+    }
+
+    Message msg(
+        QString::fromUtf8(mask_c),
+        true,
+        MessageType::PROGRAM
+    );
+
+    this->sendMessage(msg);
 }
 
 void ChatWindow::closeEvent(QCloseEvent *event)
@@ -68,13 +99,16 @@ void ChatWindow::closeEvent(QCloseEvent *event)
     tcpSocket->close();
 }
 
-void ChatWindow::receiveMessage(QString text)
+void ChatWindow::receiveMessage(Message msg)
 {
-    convWidget->displayMessage(new Message(text, MessageType::RECEIVE));
+    std::cout << msg.getContent().toStdString() << std::endl;
+    convWidget->displayMessage(msg);
+    if(msg.getType()==MessageType::USER)
+        checkWord(msg.getContent());
 }
 
-void ChatWindow::sendMessage(QString text)
+void ChatWindow::sendMessage(Message msg)
 {
-    tcpSocket->sendMessage(text);
-    convWidget->displayMessage(new Message(text, MessageType::SEND));
+    tcpSocket->sendMessage(msg);
+    convWidget->displayMessage(msg);
 }

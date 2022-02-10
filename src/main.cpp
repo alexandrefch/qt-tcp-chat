@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
+#include <thread>
 
 #include "include/ChatWindow.hpp"
 
@@ -18,8 +20,10 @@ int main(int argc, char *argv[])
             chatAmount = atoi(argv[i+1]);
     }
 
-    for(int i=0;i<chatAmount;i++)    
+    for(int i=0;i<chatAmount;i++)
+    {
         new ChatWindow(i==0);
+    }
 
     return app.exec();
 }

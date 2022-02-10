@@ -19,7 +19,7 @@ public:
     ~TcpClient();
 
     void close();
-    void sendMessage(QString text);
+    void sendMessage(Message msg);
 
 private slots:
     void onReadyRead();

@@ -160,7 +160,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		include/Message.hpp \
 		include/TcpClient.hpp \
 		include/TcpServer.hpp \
-		include/TcpSocket.hpp src/ChatWindow.cpp \
+		include/TcpSocket.hpp \
+		include/*.h src/ChatWindow.cpp \
 		src/ConversationWidget.cpp \
 		src/InputWidget.cpp \
 		src/main.cpp \
@@ -347,7 +348,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents include/ChatWindow.hpp include/ConversationWidget.hpp include/InputWidget.hpp include/Message.hpp include/TcpClient.hpp include/TcpServer.hpp include/TcpSocket.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/ChatWindow.hpp include/ConversationWidget.hpp include/InputWidget.hpp include/Message.hpp include/TcpClient.hpp include/TcpServer.hpp include/TcpSocket.hpp include/*.h $(DISTDIR)/
 	$(COPY_FILE) --parents src/ChatWindow.cpp src/ConversationWidget.cpp src/InputWidget.cpp src/main.cpp src/Message.cpp src/TcpClient.cpp src/TcpServer.cpp src/TcpSocket.cpp $(DISTDIR)/
 
 
@@ -385,8 +386,8 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc/moc_ChatWindow.cpp moc/moc_ConversationWidget.cpp moc/moc_InputWidget.cpp moc/moc_TcpClient.cpp moc/moc_TcpServer.cpp moc/moc_TcpSocket.cpp
 moc/moc_ChatWindow.cpp: include/ChatWindow.hpp \
 		include/InputWidget.hpp \
-		include/ConversationWidget.hpp \
 		include/Message.hpp \
+		include/ConversationWidget.hpp \
 		include/TcpServer.hpp \
 		include/TcpSocket.hpp \
 		include/TcpClient.hpp \
@@ -401,6 +402,7 @@ moc/moc_ConversationWidget.cpp: include/ConversationWidget.hpp \
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alex/Documents/QTproject/moc/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alex/Documents/QTproject -I/home/alex/Documents/QTproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/ConversationWidget.hpp -o moc/moc_ConversationWidget.cpp
 
 moc/moc_InputWidget.cpp: include/InputWidget.hpp \
+		include/Message.hpp \
 		moc/moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alex/Documents/QTproject/moc/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alex/Documents/QTproject -I/home/alex/Documents/QTproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/InputWidget.hpp -o moc/moc_InputWidget.cpp
@@ -443,8 +445,8 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 obj/ChatWindow.o: src/ChatWindow.cpp include/ChatWindow.hpp \
 		include/InputWidget.hpp \
-		include/ConversationWidget.hpp \
 		include/Message.hpp \
+		include/ConversationWidget.hpp \
 		include/TcpServer.hpp \
 		include/TcpSocket.hpp \
 		include/TcpClient.hpp
@@ -454,13 +456,14 @@ obj/ConversationWidget.o: src/ConversationWidget.cpp include/ConversationWidget.
 		include/Message.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/ConversationWidget.o src/ConversationWidget.cpp
 
-obj/InputWidget.o: src/InputWidget.cpp include/InputWidget.hpp
+obj/InputWidget.o: src/InputWidget.cpp include/InputWidget.hpp \
+		include/Message.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/InputWidget.o src/InputWidget.cpp
 
 obj/main.o: src/main.cpp include/ChatWindow.hpp \
 		include/InputWidget.hpp \
-		include/ConversationWidget.hpp \
 		include/Message.hpp \
+		include/ConversationWidget.hpp \
 		include/TcpServer.hpp \
 		include/TcpSocket.hpp \
 		include/TcpClient.hpp

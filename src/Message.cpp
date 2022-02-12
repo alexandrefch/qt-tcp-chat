@@ -1,5 +1,12 @@
 #include "include/Message.hpp"
 
+/**
+ * @brief Construct a new Message:: Message object
+ * 
+ * @param content text of the message
+ * @param isSend  true if the user is the sender
+ * @param type    to know if the message is made by PROGRAMM or USER 
+ */
 Message::Message(QString content, bool isSend, MessageType type)
 {
     this->content = content;
@@ -7,6 +14,12 @@ Message::Message(QString content, bool isSend, MessageType type)
     this->isSend  = isSend;
 }
 
+/**
+ * @brief Construct a new Message:: Message object
+ *        Decode message from QByteArray         
+ * 
+ * @param datas 
+ */
 Message::Message(QByteArray datas)
 {
     QString encoded = QString(datas);
@@ -17,27 +30,50 @@ Message::Message(QByteArray datas)
 
 }
 
+/**
+ * @brief Destroy the Message:: Message object
+ */
 Message::~Message()
 {
 
 }
 
+/**
+ * @brief Get message content (text)
+ * 
+ * @return QString 
+ */
 QString Message::getContent()
 {
     return content;
 }
 
+/**
+ * @brief Get message type
+ * 
+ * @return MessageType 
+ */
 MessageType Message::getType()
 {
     return type;
 }
 
+/**
+ * @brief Encode message to sendable QByteArray
+ * 
+ * @return QByteArray 
+ */
 QByteArray Message::toQByteArray()
 {
     QString encoded = (type==MessageType::USER?'u':'p') + content;
     return QByteArray(encoded.toUtf8());
 }
 
+/**
+ * @brief Generate an addable widget from the message using css properties
+ * 
+ * @return QWidget* 
+ */
 QWidget *Message::toQLabel()
 {
     QWidget *widget = new QWidget();    

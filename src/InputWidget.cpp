@@ -1,5 +1,11 @@
 #include "include/InputWidget.hpp"
 
+/**
+ * @brief Construct a new Input Widget:: Input Widget object
+ *        create button and inputfield
+ * 
+ * @param size height of the component
+ */
 InputWidget::InputWidget(unsigned int size)
 {
     this->size = size;
@@ -18,10 +24,17 @@ InputWidget::InputWidget(unsigned int size)
     connect(this->sendButton, SIGNAL(clicked()), this, SLOT(onSendMessage()));
 }
 
+/**
+ * @brief Destroy the Input Widget:: Input Widget object
+ */
 InputWidget::~InputWidget()
 {
 }
 
+/**
+ * @brief On clic on send button call onSendMessage
+ *        clear the inputfield and emit sendMessage 
+ */
 void InputWidget::onSendMessage()
 {
     QString text = this->inputField->toPlainText();

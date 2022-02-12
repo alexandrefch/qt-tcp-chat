@@ -1,5 +1,13 @@
 #include "include/ChatWindow.hpp"
 
+/**
+ * @brief Construct a new Chat Window:: Chat Window object
+ *        Init server or client on port 4242 and crate Vertical layout
+ *        with on top the message box and input field under it       
+ *        Also generate a first secret word 
+ * 
+ * @param isServer bool to know is it's a server or a client
+ */
 ChatWindow::ChatWindow(bool isServer)
 {
     setWindowTitle(WINDOW_TITLE);
@@ -33,11 +41,18 @@ ChatWindow::ChatWindow(bool isServer)
     show();
 }
 
+/**
+ * @brief Destroy the Chat Window:: Chat Window object
+ * 
+ */
 ChatWindow::~ChatWindow()
 {
     
 }
 
+/**
+ * @brief Generate a random word form the file 'ressource/word.txt'
+ */
 void ChatWindow::generateWord()
 {
     std::ifstream wordsFile("ressource/words.txt");
@@ -63,6 +78,13 @@ void ChatWindow::generateWord()
     wordsFile.close();
 }
 
+/**
+ * @brief display secret word hidden by '_' char, unhide every letter of the secret
+ *        word that is in the text received  
+ * 
+ * @see wordle game
+ * @param text to compare to the secret word
+ */
 void ChatWindow::checkWord(QString text)
 {
     const unsigned short  word_len = word.length();
@@ -75,7 +97,6 @@ void ChatWindow::checkWord(QString text)
     for(int i=0;i<word_len;i++)
         mask_c[i] = '_';
 
-    // 
     for(int i=0;i<text_len;i++)
     {
         for(int j=0;j<word_len;j++)
@@ -94,19 +115,33 @@ void ChatWindow::checkWord(QString text)
     this->sendMessage(msg);
 }
 
+/**
+ * @brief OnCloseEvent close tcp connection
+ * 
+ * @param event 
+ */
 void ChatWindow::closeEvent(QCloseEvent *event)
 {
     tcpSocket->close();
 }
 
+/**
+ * @brief function call everytime that network receive a message
+ * 
+ * @param msg 
+ */
 void ChatWindow::receiveMessage(Message msg)
 {
-    std::cout << msg.getContent().toStdString() << std::endl;
     convWidget->displayMessage(msg);
     if(msg.getType()==MessageType::USER)
         checkWord(msg.getContent());
 }
 
+/**
+ * @brief function call everytime that we want to send message on network
+ * 
+ * @param msg 
+ */
 void ChatWindow::sendMessage(Message msg)
 {
     tcpSocket->sendMessage(msg);

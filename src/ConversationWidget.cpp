@@ -1,5 +1,10 @@
 #include "include/ConversationWidget.hpp"
 
+/**
+ * @brief Construct a new Conversation Widget:: Conversation Widget object
+ *        Create a scrollarea tu make endless and create the vertical layout
+ *        to handle message
+ */
 ConversationWidget::ConversationWidget()
 {
     this->messageLayout = new QVBoxLayout;
@@ -14,11 +19,18 @@ ConversationWidget::ConversationWidget()
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 }
 
+/**
+ * @brief Destroy the Conversation Widget:: Conversation Widget object
+ */
 ConversationWidget::~ConversationWidget()
 {
 }
 
-
+/**
+ * @brief Display message inside the vertical layout
+ * 
+ * @param msg 
+ */
 void ConversationWidget::displayMessage(Message msg)
 {
     this->messageLayout->addWidget(msg.toQLabel());
